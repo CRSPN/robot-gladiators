@@ -5,14 +5,41 @@
 //    * Fight all enemy robots
 //    * Defeat each enemy robot
 // "LOSE" - Player robot's health is zero or less
+var fightOrSkip = function() {
+  // ask user if they'd like to fight or skip using  function
+    var promptFight = window.prompt('Would you like FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
 
+    if (promptFight === "" || promptFight === null) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+    promptFight = promptFight.toLowerCase();
+
+    if (promptFight === "skip") {
+    
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+    
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+      
+            playerInfo.playerMoney = playerInfo.money - 10;
+            shop();
+        }
+    }
+    return false();
+}
 var fight = function(enemy) {  
    
-    while(enemy.health > 0 && playerInfo.health > 0) {
-        // Alert users that they are starting the round
+    while (playerInfo.health > 0 && enemy.health > 0) {
+        // ask user if they'd like to fight or skip using fightOrSkip function
+        if (fightOrSkip()) {
+          // if true, leave fight by breaking loop
+          break;
+        }
 
         var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-        
+        var damage = randomNumber(playerInfo.attack - 3,playerInfo.attack);
 
         if (promptFight === "skip" || promptFight === "SKIP") {
             var confirmSkip = window.confirm("Are you sure you'd like to quit?");
@@ -21,7 +48,7 @@ var fight = function(enemy) {
                 window.alert(playerInfo.name + " has decided to skip this fight. Gooooodbye!");
                 playerInfo.money = Math.max(0, playerInfo.money - 10);
                 console.log("player money", playerInfo.money);
-                break;
+                return true;
             }
         }   
 
