@@ -24,10 +24,13 @@ var fightOrSkip = function() {
             window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
       
             playerInfo.playerMoney = playerInfo.money - 10;
-            shop();
+            
+            return true;
+            
         }
+    
     }
-    return false();
+    
 }
 var fight = function(enemy) {  
    
@@ -86,9 +89,12 @@ var fight = function(enemy) {
                 window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
             }
 
-        }else {
+        }
+        
+        else {
             window.alert("You need to pick a valid option. Try again!");
         }
+        return false;
     }
 };
 var startGame = function() {
@@ -142,27 +148,22 @@ var endGame = function() {
 
 var shop = function() {
     var shopOptionPrompt = window.prompt(
-        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE to make a choice."
     );
+    shopOptionPrompt = parseInt(shopOptionPrompt);
+
     switch (shopOptionPrompt) {
-        case "refill":
-        case "REFILL":
-            playerInfo.refillHealth ();
-
+        case 1:
+            playerInfo.refillHealth();
             break;
-        case "upgrade":
-        case "UPGRADE":
+        case 2:
             playerInfo.upgradeAttack();
-            
             break;
-        case "LEAVE":
-        case "leave":
-            window.alert("Leaving the store.");
-
+        case 3:
+            window.alert("Thank you for your buisness.");
             break;
         default:
-            window.alert("You did not pick a valid option. Try again dude.");
-
+            window.alert("You did not pick a valid option. Try again.")
             shop();
             break;
     }
